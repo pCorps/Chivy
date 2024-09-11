@@ -1,6 +1,5 @@
-﻿using ChivyPoo.Data;
-using ChivyPoo.Data.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using ChivyPoo.Data.Models;
+
 namespace ChivyPoo.Repository.IRepository
 {
     public interface ICategoryRepository

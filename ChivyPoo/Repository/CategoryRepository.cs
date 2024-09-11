@@ -1,7 +1,8 @@
-﻿using ChivyPoo.Data;
-using ChivyPoo.Data.Models;
+﻿using ChivyPoo.Data.Models;
+using ChivyPoo.Data;
 using ChivyPoo.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace ChivyPoo.Repository
 {
@@ -26,7 +27,7 @@ namespace ChivyPoo.Repository
             if (obj != null)
             {
                 _db.Category.Remove(obj);
-                return (await _db.SaveChangesAsync()) > 0;  //delete succesful, 87.
+                return (await _db.SaveChangesAsync()) > 0;
             }
             return false;
         }
@@ -34,12 +35,13 @@ namespace ChivyPoo.Repository
         public async Task<Category> GetAsync(int id)
         {
             var obj = await _db.Category.FirstOrDefaultAsync(u => u.Id == id);
-            if (obj != null)
+            if (obj == null)
             {
                 return new Category();
             }
             return obj;
         }
+
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             return await _db.Category.ToListAsync();
@@ -48,17 +50,14 @@ namespace ChivyPoo.Repository
         public async Task<Category> UpdateAsync(Category obj)
         {
             var objFromDb = await _db.Category.FirstOrDefaultAsync(u => u.Id == obj.Id);
-            if (objFromDb != null)
+            if (objFromDb is not null)
             {
                 objFromDb.Name = obj.Name;
                 _db.Category.Update(objFromDb);
                 await _db.SaveChangesAsync();
                 return objFromDb;
             }
-
             return obj;
-
         }
     }
 }
-
